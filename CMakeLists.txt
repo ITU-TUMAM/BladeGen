@@ -33,6 +33,9 @@ include(VendorOCCT)
 # CppAD — automatic differentiation (vendored on Windows, FetchContent on Linux)
 include(VendorCppAD)
 
+# nlohmann/json — header-only JSON, FetchContent on all platforms
+include(VendorJson)
+
 # Eigen — header-only, just expose the include path
 add_library(Eigen3::Eigen INTERFACE IMPORTED)
 set_target_properties(Eigen3::Eigen PROPERTIES

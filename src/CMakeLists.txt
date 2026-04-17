@@ -11,6 +11,7 @@ add_library(pcad_lib STATIC
     io/StlExporter.cpp
     io/IgesExporter.cpp
     blade/OcctBlade.cpp
+    params/BladeParams.cpp
 )
 
 add_library(pcad::lib ALIAS pcad_lib)
@@ -26,6 +27,7 @@ target_link_libraries(pcad_lib
         pcad::occt
         Eigen3::Eigen
         pcad::cppad
+        pcad::json
     PRIVATE
         pcad::compiler_flags
 )
