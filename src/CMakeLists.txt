@@ -12,6 +12,7 @@ add_library(pcad_lib STATIC
     io/IgesExporter.cpp
     blade/OcctBlade.cpp
     params/BladeParams.cpp
+    pipeline/BladeRunner.cpp
 )
 
 add_library(pcad::lib ALIAS pcad_lib)
