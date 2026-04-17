@@ -9,6 +9,7 @@ add_library(pcad_lib STATIC
     geometry/OcctUtils.cpp
     io/StepExporter.cpp
     io/StlExporter.cpp
+    io/IgesExporter.cpp
     blade/OcctBlade.cpp
 )
 

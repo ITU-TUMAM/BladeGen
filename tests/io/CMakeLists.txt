@@ -3,6 +3,7 @@
 add_executable(pcad_tests_io
     test_step_export.cpp
     test_stl_export.cpp
+    test_iges_export.cpp
 )
 
 target_link_libraries(pcad_tests_io

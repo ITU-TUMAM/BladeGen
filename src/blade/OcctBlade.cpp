@@ -25,9 +25,28 @@
 // Shape
 #include <TopoDS_Wire.hxx>
 
+#include <cmath>
 #include <stdexcept>
 
 namespace PCAD::Blade {
+
+// Remove consecutive duplicate points (within tol) from a closed loop.
+// The BSpline fitter requires strictly positive chord-length increments.
+static std::vector<std::array<double, 3>> deduplicate(
+    const std::vector<std::array<double, 3>>& in, double tol = 1e-9)
+{
+    std::vector<std::array<double, 3>> out;
+    out.reserve(in.size());
+    for (const auto& p : in) {
+        if (out.empty()) { out.push_back(p); continue; }
+        const auto& q = out.back();
+        const double d = std::sqrt((p[0]-q[0])*(p[0]-q[0]) +
+                                   (p[1]-q[1])*(p[1]-q[1]) +
+                                   (p[2]-q[2])*(p[2]-q[2]));
+        if (d > tol) out.push_back(p);
+    }
+    return out;
+}
 
 std::optional<TopoDS_Shape> MakeBladeSolid(
     const std::vector<std::vector<std::array<double, 3>>>& sections)
@@ -35,21 +54,21 @@ std::optional<TopoDS_Shape> MakeBladeSolid(
     if (sections.size() < 2)
         return std::nullopt;
 
-    const int n_pts = static_cast<int>(sections.front().size());
-    for (const auto& sec : sections)
-        if (static_cast<int>(sec.size()) != n_pts)
-            return std::nullopt;   // all loops must have equal point count
-
     // ── Step 1+2: build a wire for each spanwise section ──────────────────────
     BRepOffsetAPI_ThruSections skinner(
         /*isSolid=*/true,
         /*isRuled=*/false);
 
     for (const auto& sec : sections) {
+        // Remove consecutive duplicates (arise when LE/TE thickness == 0)
+        const auto pts_vec = deduplicate(sec);
+        const int n_pts = static_cast<int>(pts_vec.size());
+        if (n_pts < 4) return std::nullopt;
+
         // Pack 3D points into OCCT array (1-based indexing)
         NCollection_Array1<gp_Pnt> pts(1, n_pts);
         for (int i = 0; i < n_pts; ++i)
-            pts.SetValue(i + 1, gp_Pnt(sec[i][0], sec[i][1], sec[i][2]));
+            pts.SetValue(i + 1, gp_Pnt(pts_vec[i][0], pts_vec[i][1], pts_vec[i][2]));
 
         // Fit a BSpline through the loop; degree 3, continuity C2
         GeomAPI_PointsToBSpline fitter;
