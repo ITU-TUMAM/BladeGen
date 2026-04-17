@@ -9,6 +9,7 @@ add_library(pcad_lib STATIC
     geometry/OcctUtils.cpp
     io/StepExporter.cpp
     io/StlExporter.cpp
+    blade/OcctBlade.cpp
 )
 
 add_library(pcad::lib ALIAS pcad_lib)
@@ -23,6 +24,7 @@ target_link_libraries(pcad_lib
     PUBLIC
         pcad::occt
         Eigen3::Eigen
+        pcad::cppad
     PRIVATE
         pcad::compiler_flags
 )

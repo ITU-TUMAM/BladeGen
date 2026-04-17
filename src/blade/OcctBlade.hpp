@@ -1,0 +1,28 @@
+/// @file blade/OcctBlade.hpp
+/// @brief OCCT-based blade solid construction from spanwise section loops.
+///
+/// Takes the 3D point arrays produced by BladeGeometry::all_sections_3d() and
+/// skins them into a closed solid using OpenCASCADE ThruSections lofting.
+///
+/// OCCT internals stay in the .cpp — only TopoDS_Shape crosses the boundary.
+
+#pragma once
+
+#include <TopoDS_Shape.hxx>
+
+#include <array>
+#include <optional>
+#include <vector>
+
+namespace PCAD::Blade {
+
+/// Create a blade solid by skinning ordered spanwise profile loops.
+///
+/// @param sections   outer: span stations ordered hub→tip
+///                   inner: closed 3D point loop for that section
+///                   All loops must have the same point count.
+/// @returns          a closed BRep solid, or nullopt on OCCT failure.
+[[nodiscard]] std::optional<TopoDS_Shape> MakeBladeSolid(
+    const std::vector<std::vector<std::array<double, 3>>>& sections);
+
+} // namespace PCAD::Blade
