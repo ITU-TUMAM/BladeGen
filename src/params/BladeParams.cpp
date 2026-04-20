@@ -175,7 +175,7 @@ Blade::BladeGeometry<double> BladeParams::to_blade_geometry() const
         spans.push_back(static_cast<double>(i) / (n_interp_sections + 1));
 
     // Sort and remove near-duplicates (within 1e-6 span)
-    std::sort(spans.begin(), spans.end());
+    std::ranges::sort(spans);
     spans.erase(
         std::unique(spans.begin(), spans.end(),
                     [](double a, double b) { return b - a < 1e-6; }),

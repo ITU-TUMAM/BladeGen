@@ -29,8 +29,8 @@ BladeRunnerResult BladeRunner::run(const Params::BladeParams& params) const
     // ── Step 2: OCCT solid ────────────────────────────────────────────────────
     const auto solid = Blade::MakeBladeSolid(sections);
     if (!solid)
-        throw std::runtime_error("BladeRunner: OCCT skinning failed — "
-                                 "check section count and profile point density");
+        throw std::runtime_error("BladeRunner: OCCT skinning failed — " +
+                                 solid.error());
 
     // ── Step 3: export ────────────────────────────────────────────────────────
     if (!m_cfg.export_iges && !m_cfg.export_step && !m_cfg.export_stl)

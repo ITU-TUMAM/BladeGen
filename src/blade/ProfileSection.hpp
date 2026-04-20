@@ -18,11 +18,8 @@
 
 #include <array>
 #include <cmath>
+#include <numbers>
 #include <vector>
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
 
 namespace PCAD::Blade {
 
@@ -246,12 +243,12 @@ struct ProfileSection
 
         // Suction side: LE → TE
         for (int i = 0; i < n_pts; ++i) {
-            const double u = 0.5 * (1.0 - std::cos(M_PI * i / (n_pts - 1)));
+            const double u = 0.5 * (1.0 - std::cos(std::numbers::pi * i / (n_pts - 1)));
             pts.push_back(suction_side(T(u)));
         }
         // Pressure side: TE → LE (reverse order closes the loop)
         for (int i = n_pts - 1; i >= 0; --i) {
-            const double u = 0.5 * (1.0 - std::cos(M_PI * i / (n_pts - 1)));
+            const double u = 0.5 * (1.0 - std::cos(std::numbers::pi * i / (n_pts - 1)));
             pts.push_back(pressure_side(T(u)));
         }
         return pts;

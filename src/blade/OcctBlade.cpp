@@ -26,6 +26,7 @@
 #include <TopoDS_Wire.hxx>
 
 #include <cmath>
+#include <expected>
 #include <stdexcept>
 
 namespace PCAD::Blade {
@@ -48,11 +49,11 @@ static std::vector<std::array<double, 3>> deduplicate(
     return out;
 }
 
-std::optional<TopoDS_Shape> MakeBladeSolid(
+std::expected<TopoDS_Shape, std::string> MakeBladeSolid(
     const std::vector<std::vector<std::array<double, 3>>>& sections)
 {
     if (sections.size() < 2)
-        return std::nullopt;
+        return std::unexpected("need at least 2 sections");
 
     // ── Step 1+2: build a wire for each spanwise section ──────────────────────
     BRepOffsetAPI_ThruSections skinner(
@@ -63,7 +64,7 @@ std::optional<TopoDS_Shape> MakeBladeSolid(
         // Remove consecutive duplicates (arise when LE/TE thickness == 0)
         const auto pts_vec = deduplicate(sec);
         const int n_pts = static_cast<int>(pts_vec.size());
-        if (n_pts < 4) return std::nullopt;
+        if (n_pts < 4) return std::unexpected("section has fewer than 4 unique points");
 
         // Pack 3D points into OCCT array (1-based indexing)
         NCollection_Array1<gp_Pnt> pts(1, n_pts);
@@ -79,17 +80,17 @@ std::optional<TopoDS_Shape> MakeBladeSolid(
                     /*Tol3D=*/1.0e-6);
 
         if (!fitter.IsDone())
-            return std::nullopt;
+            return std::unexpected("GeomAPI_PointsToBSpline failed");
 
         const Handle(Geom_Curve) curve = fitter.Curve();
 
         BRepBuilderAPI_MakeEdge edge_maker(curve);
         if (!edge_maker.IsDone())
-            return std::nullopt;
+            return std::unexpected("BRepBuilderAPI_MakeEdge failed");
 
         BRepBuilderAPI_MakeWire wire_maker(edge_maker.Edge());
         if (!wire_maker.IsDone())
-            return std::nullopt;
+            return std::unexpected("BRepBuilderAPI_MakeWire failed");
 
         skinner.AddWire(wire_maker.Wire());
     }
@@ -99,7 +100,7 @@ std::optional<TopoDS_Shape> MakeBladeSolid(
     skinner.Build();
 
     if (!skinner.IsDone())
-        return std::nullopt;
+        return std::unexpected("BRepOffsetAPI_ThruSections failed");
 
     return skinner.Shape();
 }

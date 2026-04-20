@@ -11,7 +11,7 @@
 #include <TopoDS_Shape.hxx>
 
 #include <array>
-#include <optional>
+#include <expected>
 #include <vector>
 
 namespace PCAD::Blade {
@@ -21,8 +21,8 @@ namespace PCAD::Blade {
 /// @param sections   outer: span stations ordered hub→tip
 ///                   inner: closed 3D point loop for that section
 ///                   All loops must have the same point count.
-/// @returns          a closed BRep solid, or nullopt on OCCT failure.
-[[nodiscard]] std::optional<TopoDS_Shape> MakeBladeSolid(
+/// @returns          a closed BRep solid, or an error string on OCCT failure.
+[[nodiscard]] std::expected<TopoDS_Shape, std::string> MakeBladeSolid(
     const std::vector<std::vector<std::array<double, 3>>>& sections);
 
 } // namespace PCAD::Blade
