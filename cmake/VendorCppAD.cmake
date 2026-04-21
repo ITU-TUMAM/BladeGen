@@ -36,7 +36,7 @@ if(WIN32)
         IMPORTED_LOCATION_RELWITHDEBINFO "${_cppad_root}/x64-Release/lib/cppad_lib.lib"
         IMPORTED_LOCATION_MINSIZEREL     "${_cppad_root}/x64-Release/lib/cppad_lib.lib"
     )
-    target_include_directories(cppad_lib INTERFACE
+    target_include_directories(cppad_lib SYSTEM INTERFACE
         "$<$<CONFIG:Debug>:${_cppad_root}/x64-Debug/include>"
         "$<$<NOT:$<CONFIG:Debug>>:${_cppad_root}/x64-Release/include>"
     )
@@ -100,7 +100,7 @@ else()
     # consumed via add_subdirectory.  The headers live in the source tree under
     # include/ and configure.hpp is written into the source tree by CppAD's own
     # configure step, so both paths must be on the interface.
-    target_include_directories(cppad_lib INTERFACE
+    target_include_directories(cppad_lib SYSTEM INTERFACE
         "${cppad_SOURCE_DIR}/include"
         "${cppad_BINARY_DIR}/include"
     )

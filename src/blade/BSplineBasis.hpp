@@ -46,13 +46,13 @@ template <typename T>
 {
     const int n = static_cast<int>(knots.size()) - p - 2;
 
-    if (t >= knots[n + 1]) return n;   // clamp at upper boundary
-    if (t <= knots[p])     return p;   // clamp at lower boundary
+    if (t >= knots[static_cast<std::size_t>(n + 1)]) return n;   // clamp at upper boundary
+    if (t <= knots[static_cast<std::size_t>(p)])     return p;   // clamp at lower boundary
 
     int lo = p, hi = n + 1;
     while (hi - lo > 1) {
         int mid = (lo + hi) / 2;
-        (t < knots[mid]) ? hi = mid : lo = mid;
+        (t < knots[static_cast<std::size_t>(mid)]) ? hi = mid : lo = mid;
     }
     return lo;
 }
@@ -128,13 +128,13 @@ template <typename T>
     const int n_knots   = n + p + 1;
     const int n_interior = n - p - 1;    // may be 0
 
-    std::vector<double> knots(n_knots, 0.0);
+    std::vector<double> knots(static_cast<std::size_t>(n_knots), 0.0);
 
     for (int i = 1; i <= n_interior; ++i)
-        knots[p + i] = static_cast<double>(i) / static_cast<double>(n_interior + 1);
+        knots[static_cast<std::size_t>(p + i)] = static_cast<double>(i) / static_cast<double>(n_interior + 1);
 
     for (int i = 0; i <= p; ++i)
-        knots[n_knots - 1 - i] = 1.0;
+        knots[static_cast<std::size_t>(n_knots - 1 - i)] = 1.0;
 
     return knots;
 }

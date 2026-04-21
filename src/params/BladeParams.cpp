@@ -173,7 +173,7 @@ Blade::BladeGeometry<double> BladeParams::to_blade_geometry() const
 {
     // Collect all span fractions: user-defined + evenly-spaced interpolated
     std::vector<double> spans;
-    spans.reserve(stations.size() + n_interp_sections);
+    spans.reserve(stations.size() + static_cast<std::size_t>(n_interp_sections));
 
     for (const auto& st : stations)
         spans.push_back(st.span);
