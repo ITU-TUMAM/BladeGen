@@ -1,40 +1,60 @@
-# ParametricCAD
+# BladeGen
 
-> A GitHub template for CAD applications built on
-> [OpenCASCADE Technology (OCCT)](https://dev.opencascade.org/) in modern C++20.
+> Parametric turbine blade geometry generation in modern C++23,
+> built on [OpenCASCADE Technology (OCCT)](https://dev.opencascade.org/).
 
-[![CI · Linux](https://github.com/onurtuncer/ParametricCAD/actions/workflows/ci-linux.yml/badge.svg)](https://github.com/onurtuncer/ParametricCAD/actions/workflows/ci-linux.yml)
-[![CI · Windows](https://github.com/onurtuncer/ParametricCAD/actions/workflows/ci-windows.yml/badge.svg)](https://github.com/onurtuncer/ParametricCAD/actions/workflows/ci-windows.yml)
-[![Docs](https://github.com/onurtuncer/ParametricCAD/actions/workflows/docs.yml/badge.svg)](https://onurtuncer.github.io/ParametricCAD/)
+[![CI · Linux](https://github.com/onurtuncer/BladeGen/actions/workflows/ci-linux.yml/badge.svg)](https://github.com/onurtuncer/BladeGen/actions/workflows/ci-linux.yml)
+[![CI · Windows](https://github.com/onurtuncer/BladeGen/actions/workflows/ci-windows.yml/badge.svg)](https://github.com/onurtuncer/BladeGen/actions/workflows/ci-windows.yml)
+[![Docs](https://github.com/onurtuncer/BladeGen/actions/workflows/docs.yml/badge.svg)](https://onurtuncer.github.io/BladeGen/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 ---
 
-## What this template gives you
+## What BladeGen does
 
-| Concern | Solution |
-|---|---|
-| Concern | Solution |
-|---|---|
-| Geometry kernel | OpenCASCADE 7.8 — vendored as a git submodule |
-| Automatic differentiation | CppAD — pre-built on Windows, FetchContent on Linux |
-| Build system | CMake 3.25+ with `CMakePresets.json` |
-| Compiler support | GCC, Clang, MSVC (x64) |
-| Test harness | Catch2 v3 — vendored as a git submodule |
-| Documentation | Doxygen XML → Sphinx + Breathe + Furo HTML |
-| CI | GitHub Actions — Linux and Windows matrix |
-| Code style | `.clang-format` + `.clang-tidy` |
+BladeGen takes a compact JSON description of a turbine (or compressor) blade
+and produces an OCCT solid that can be exported to IGES, STEP, or STL.
 
-Everything is either vendored or fetched at configure time. No system-installed
-libraries, no vcpkg, no Conan. A clean clone + one bootstrap command is all
-that is needed to build.
+The full pipeline is:
+
+```
+JSON parameters
+    │
+    ▼
+BladeParams          ← per-station inlet/exit angles, thickness, LE radius, …
+    │
+    ▼
+ProfileSection       ← B-spline camber + thickness envelope in the 2-D (m′, θ) plane
+    │
+    ▼
+StreamlineMPrime     ← RK4 integration of the meridional conformal coordinate m′
+    │
+    ▼
+BladeSection / BladeGeometry   ← 3-D point arrays (hub → tip)
+    │
+    ▼
+OcctBlade            ← OCCT lofted/skinned solid
+    │
+    ▼
+IgesExporter / StepExporter / StlExporter
+```
+
+### Key modelling features
+
+| Feature | Detail |
+|---|---|
+| Profile parameterisation | B-spline camber line + symmetric thickness envelope; parameters include `t_max`, `t_max_loc`, `t_TE`, TE wedge angle, and LE radius |
+| Conformal coordinate | Meridional streamline is mapped to the `m′` conformal coordinate via RK4 integration, giving a proper area-rule-consistent design plane |
+| Multi-span stacking | Arbitrary number of spanwise stations; intermediate sections are interpolated linearly; lean (Δθ) and sweep (Δx) stacking offsets are supported |
+| Automatic differentiation | CppAD templates thread through the geometry layer, enabling gradient-based optimisation of any blade parameter |
+| Export | IGES, STEP (AP203/AP214), and binary/ASCII STL via OCCT `DataExchange` |
 
 ---
 
 ## Repository layout
 
 ```
-ParametricCAD/
+BladeGen/
 ├── cmake/
 │   ├── CompilerFlags.cmake   # Strict cross-platform warning flags
 │   ├── VendorOCCT.cmake      # OCCT subdirectory + bladegen::occt alias target
@@ -46,14 +66,19 @@ ParametricCAD/
 │   ├── eigen/                # git submodule — Eigen 3.4.0
 │   └── cppad/                # pre-built CppAD (Windows only; x64-Debug / x64-Release)
 ├── src/
-│   ├── geometry/             # OCCT wrapper (primitives, bounding box)
-│   ├── io/                   # STEP / IGES / STL export
-│   ├── parametric/           # parametric modelling layer (in progress)
+│   ├── blade/                # ProfileSection, BladeSection, OcctBlade, B-spline basis
+│   ├── geometry/             # OCCT primitive wrappers and bounding-box utilities
+│   ├── io/                   # IGES / STEP / STL exporters
+│   ├── params/               # BladeParams — JSON I/O and validation
+│   ├── pipeline/             # BladeRunner — single-call orchestrator
 │   └── main.cpp              # CLI entry point
 ├── tests/
-│   ├── geometry/             # Catch2 tests — primitive creation & bbox
-│   ├── io/                   # Catch2 tests — STEP and STL export
-│   └── math/                 # Catch2 tests — CppAD automatic differentiation
+│   ├── blade/                # Profile, B-spline, and m′ unit tests
+│   ├── geometry/             # Primitive creation and bounding-box tests
+│   ├── io/                   # IGES, STEP, and STL export tests
+│   ├── math/                 # CppAD automatic differentiation tests
+│   ├── params/               # BladeParams JSON round-trip tests
+│   └── pipeline/             # BladeRunner end-to-end tests
 ├── docs/
 │   ├── sphinx/               # Sphinx source (conf.py, index.rst, api.rst)
 │   ├── requirements.txt      # Pinned Python doc dependencies
@@ -108,8 +133,8 @@ sudo apt install cmake ninja-build gcc g++ python3 python3-venv doxygen
 ### 1 — Clone
 
 ```bash
-git clone https://github.com/onurtuncer/YOUR_REPO
-cd YOUR_REPO
+git clone https://github.com/onurtuncer/BladeGen
+cd BladeGen
 ```
 
 ### 2 — Bootstrap (pulls all submodules)
@@ -144,6 +169,31 @@ ctest --preset linux-debug --output-on-failure
 ctest --preset windows-msvc-debug --output-on-failure
 ```
 
+### 5 — Generate a blade
+
+Provide a JSON parameter file and point `BladeRunner` at it:
+
+```cpp
+#include "params/BladeParams.hpp"
+#include "pipeline/BladeRunner.hpp"
+
+BladeGen::Pipeline::BladeRunnerConfig cfg;
+cfg.output_dir    = "output/";
+cfg.export_iges   = true;
+cfg.export_step   = true;
+cfg.profile_points = 128;
+
+auto result = BladeGen::Pipeline::BladeRunner(cfg).run("my_blade.json");
+// result.written  — list of files produced
+// result.n_sections, result.pts_per_section — geometry metadata
+```
+
+Or from the command line:
+
+```bash
+./build/linux-release/bladegen my_blade.json
+```
+
 ---
 
 ## Available presets
@@ -161,13 +211,6 @@ ctest --preset windows-msvc-debug --output-on-failure
 ---
 
 ## Vendored dependencies
-
-Most dependencies are git submodules pinned to a specific tag; the pinned
-commits are baked into the gitlinks — `bootstrap.sh` / `bootstrap.ps1` always
-checks out exactly those commits with no extra steps. CppAD follows a different
-strategy: a pre-built static library is checked into `vendor/cppad/` for
-Windows, while on Linux it is downloaded and built from source at configure
-time via CMake's FetchContent.
 
 | Library | Version | License | Vendoring strategy | Purpose |
 |---|---|---|---|---|
@@ -193,12 +236,6 @@ git commit -m "chore(vendor): bump <name> to <new-tag>"
 
 ## Building documentation
 
-The rendered documentation is published at
-**<https://onurtuncer.github.io/ParametricCAD/>** and is updated automatically
-on every push to `main` (via the Docs workflow).
-
-To build locally:
-
 ```bash
 # Linux
 ./docs/venv-setup.sh
@@ -216,31 +253,19 @@ cmake --build build/docs --target docs
 
 ---
 
-## Using this template for a new project
-
-1. Click **Use this template → Create a new repository** on GitHub.
-2. Rename the `project()` call in `CMakeLists.txt`.
-3. Replace `onurtuncer/ParametricCAD` badge URLs with your org and repo name.
-4. Add your own modules under `src/` and tests under `tests/`.
-5. Run `.\bootstrap.ps1` (or `./bootstrap.sh`) and confirm the build is clean.
-
----
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for branch naming, commit style, and
-the PR checklist.
-
----
-
 ## License
 
 GPL v3 — see [LICENSE](LICENSE).
 
+Third-party licenses (OCCT, CppAD, Catch2, Eigen) are collected under
+[LICENSES/](LICENSES/).
+
+---
+
 ## Author
 
 **Prof. Dr. Onur Tuncer**
-Aerospace Engineer, Researcher & C++ Systems Developer
+Aerospace Engineer · Istanbul Technical University
 Email: onur.tuncer@itu.edu.tr
 
 <p align="left">
