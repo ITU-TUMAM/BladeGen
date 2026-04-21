@@ -1,11 +1,11 @@
-ParametricCAD
-=============
+BladeGen
+========
 
-A GitHub template for parametric CAD applications built on
-`OpenCASCADE Technology (OCCT) <https://dev.opencascade.org/>`_ in modern C++20.
+Parametric turbomachinery blade generation in modern C++23,
+built on `OpenCASCADE Technology (OCCT) <https://dev.opencascade.org/>`_.
 
-.. image:: https://github.com/onurtuncer/ParametricCAD/actions/workflows/ci.yml/badge.svg
-   :target: https://github.com/onurtuncer/ParametricCAD/actions/workflows/ci.yml
+.. image:: https://github.com/onurtuncer/BladeGen/actions/workflows/ci-linux.yml/badge.svg
+   :target: https://github.com/onurtuncer/BladeGen/actions/workflows/ci-linux.yml
 
 ----
 
@@ -13,4 +13,5 @@ A GitHub template for parametric CAD applications built on
    :maxdepth: 2
    :caption: Contents
 
+   theory/index
    api
