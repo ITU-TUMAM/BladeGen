@@ -4,7 +4,7 @@
 # Downloaded via FetchContent on all platforms (no quirks; purely header-only).
 # Tests and install rules are suppressed.
 #
-# Exposes alias target: pcad::json
+# Exposes alias target: bladegen::json
 
 include(FetchContent)
 
@@ -20,4 +20,4 @@ set(JSON_CI         OFF CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(nlohmann_json)
 
-add_library(pcad::json ALIAS nlohmann_json)
+add_library(bladegen::json ALIAS nlohmann_json)

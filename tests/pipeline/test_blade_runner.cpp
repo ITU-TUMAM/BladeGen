@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 #include <catch2/catch_test_macros.hpp>
 
 #include "params/BladeParams.hpp"
@@ -7,7 +14,7 @@
 #include <fstream>
 
 namespace fs = std::filesystem;
-using namespace PCAD;
+using namespace BladeGen;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 static Params::BladeParams typical_params()
@@ -31,7 +38,7 @@ static Params::BladeParams typical_params()
 
 static fs::path tmp_dir()
 {
-    auto p = fs::temp_directory_path() / "pcad_runner_test";
+    auto p = fs::temp_directory_path() / "bladegen_runner_test";
     fs::create_directories(p);
     return p;
 }

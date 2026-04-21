@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file blade/StreamlineMPrime.hpp
 /// @brief Meridional streamline as a B-spline curve and RK4 integration of the
 ///        conformal meridional coordinate m′ = ∫ dm/r along that streamline.
@@ -17,7 +24,7 @@
 #include <cassert>
 #include <vector>
 
-namespace PCAD::Blade {
+namespace BladeGen::Blade {
 
 // ─── 2D B-spline streamline in (x, r) ────────────────────────────────────────
 /// Meridional construction streamline as a B-spline curve.
@@ -200,4 +207,4 @@ template <typename T>
     return { x, r * sin(theta), r * cos(theta) };
 }
 
-} // namespace PCAD::Blade
+} // namespace BladeGen::Blade

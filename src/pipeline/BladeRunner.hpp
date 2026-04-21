@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file pipeline/BladeRunner.hpp
 /// @brief Single-object orchestrator for the full blade generation pipeline.
 ///
@@ -15,9 +22,9 @@
 #include <vector>
 
 // Forward declarations — OCCT and geometry types stay out of this header.
-namespace PCAD::Params { struct BladeParams; }
+namespace BladeGen::Params { struct BladeParams; }
 
-namespace PCAD::Pipeline {
+namespace BladeGen::Pipeline {
 
 // ─── Configuration ────────────────────────────────────────────────────────────
 /// Controls how BladeRunner samples geometry and which files it produces.
@@ -70,4 +77,4 @@ private:
     BladeRunnerConfig m_cfg;
 };
 
-} // namespace PCAD::Pipeline
+} // namespace BladeGen::Pipeline

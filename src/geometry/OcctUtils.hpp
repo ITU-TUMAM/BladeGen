@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file geometry/OcctUtils.hpp
 /// @brief Thin wrappers around OpenCASCADE geometry primitives.
 ///
@@ -14,7 +21,7 @@
 // TopoDS_Shape must be a complete type because it is stored inside std::optional.
 #include <TopoDS_Shape.hxx>
 
-namespace PCAD::Geometry {
+namespace BladeGen::Geometry {
 
 // ── BoundingBox ──────────────────────────────────────────────────────────────
 
@@ -50,4 +57,4 @@ struct BoundingBox
 /// Human-readable name for the top-level shape type (e.g. "Solid", "Shell").
 [[nodiscard]] std::string ShapeTypeString(const TopoDS_Shape& shape);
 
-} // namespace PCAD::Geometry
+} // namespace BladeGen::Geometry

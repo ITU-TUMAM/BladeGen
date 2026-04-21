@@ -4,17 +4,17 @@ API Reference
 Geometry
 --------
 
-.. doxygennamespace:: PCAD::Geometry
+.. doxygennamespace:: BladeGen::Geometry
    :project: ParametricCAD
    :members:
 
 I/O
 ---
 
-.. doxygenclass:: PCAD::IO::StepExporter
+.. doxygenclass:: BladeGen::IO::StepExporter
    :project: ParametricCAD
    :members:
 
-.. doxygenclass:: PCAD::IO::StlExporter
+.. doxygenclass:: BladeGen::IO::StlExporter
    :project: ParametricCAD
    :members:

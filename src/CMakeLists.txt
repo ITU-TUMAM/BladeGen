@@ -1,3 +1,10 @@
+# ------------------------------------------------------------------------------
+# Project: BladeGen
+# Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+# License-Filename: LICENSE
+# ------------------------------------------------------------------------------
 # src/CMakeLists.txt
 
 # ── Core library ─────────────────────────────────────────────────────────────
@@ -5,7 +12,7 @@
 # The CLI executable and the test suite both link against it, so tests
 # can exercise every module without going through main().
 
-add_library(pcad_lib STATIC
+add_library(bladegen_lib STATIC
     geometry/OcctUtils.cpp
     io/StepExporter.cpp
     io/StlExporter.cpp
@@ -15,32 +22,32 @@ add_library(pcad_lib STATIC
     pipeline/BladeRunner.cpp
 )
 
-add_library(pcad::lib ALIAS pcad_lib)
+add_library(bladegen::lib ALIAS bladegen_lib)
 
-target_include_directories(pcad_lib
+target_include_directories(bladegen_lib
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(pcad_lib
+target_link_libraries(bladegen_lib
     PUBLIC
-        pcad::occt
+        bladegen::occt
         Eigen3::Eigen
-        pcad::cppad
-        pcad::json
+        bladegen::cppad
+        bladegen::json
     PRIVATE
-        pcad::compiler_flags
+        bladegen::compiler_flags
 )
 
 # ── CLI executable ────────────────────────────────────────────────────────────
-add_executable(pcad_app main.cpp)
-add_executable(pcad::app ALIAS pcad_app)
+add_executable(bladegen_app main.cpp)
+add_executable(bladegen::app ALIAS bladegen_app)
 
-set_target_properties(pcad_app PROPERTIES OUTPUT_NAME "pcad")
+set_target_properties(bladegen_app PROPERTIES OUTPUT_NAME "bladegen")
 
-target_link_libraries(pcad_app
+target_link_libraries(bladegen_app
     PRIVATE
-        pcad::lib
-        pcad::compiler_flags
+        bladegen::lib
+        bladegen::compiler_flags
 )

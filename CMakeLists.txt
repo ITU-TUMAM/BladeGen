@@ -1,3 +1,10 @@
+# ------------------------------------------------------------------------------
+# Project: BladeGen
+# Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+# License-Filename: LICENSE
+# ------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 3.25)
 
 project(ParametricCAD
@@ -20,9 +27,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # ── Build options ────────────────────────────────────────────────────────────
-option(PCAD_BUILD_TESTS   "Build the Catch2 test suite"  ON)
-option(PCAD_BUILD_DOCS    "Build Sphinx + Doxygen docs"  OFF)
-option(PCAD_ENABLE_ASAN   "Enable AddressSanitizer"      OFF)
+option(BLADEGEN_BUILD_TESTS   "Build the Catch2 test suite"  ON)
+option(BLADEGEN_BUILD_DOCS    "Build Sphinx + Doxygen docs"  OFF)
+option(BLADEGEN_ENABLE_ASAN   "Enable AddressSanitizer"      OFF)
 
 # ── Compiler flags ───────────────────────────────────────────────────────────
 include(CompilerFlags)
@@ -43,7 +50,7 @@ set_target_properties(Eigen3::Eigen PROPERTIES
 )
 
 # Catch2 — only needed when tests are enabled
-if(PCAD_BUILD_TESTS)
+if(BLADEGEN_BUILD_TESTS)
     set(CATCH_INSTALL_DOCS    OFF CACHE BOOL "" FORCE)
     set(CATCH_INSTALL_EXTRAS  OFF CACHE BOOL "" FORCE)
     add_subdirectory(vendor/catch2)
@@ -53,12 +60,12 @@ endif()
 add_subdirectory(src)
 
 # ── Tests ────────────────────────────────────────────────────────────────────
-if(PCAD_BUILD_TESTS)
+if(BLADEGEN_BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()
 
 # ── Docs ─────────────────────────────────────────────────────────────────────
-if(PCAD_BUILD_DOCS)
+if(BLADEGEN_BUILD_DOCS)
     include(Docs)
 endif()

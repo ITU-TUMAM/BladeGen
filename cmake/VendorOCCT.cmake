@@ -73,7 +73,7 @@ endif()
 # Standard_Version.hxx (configure_file) lands in ${CMAKE_BINARY_DIR}/occt/inc/.
 # Both paths are needed: the first for all source headers, the second for that
 # one generated header. The global include_directories ensures OCCT's own
-# toolkits find them; the INTERFACE on pcad_occt_kernel propagates to consumers.
+# toolkits find them; the INTERFACE on bladegen_occt_kernel propagates to consumers.
 include_directories(BEFORE
     "${CMAKE_BINARY_DIR}/inc"                        # Windows: flat copy by OCCT
     "${CMAKE_BINARY_DIR}/occt/inc"                   # Windows: Standard_Version.hxx (INSTALL_DIR_INCLUDE="inc")
@@ -85,19 +85,19 @@ include_directories(BEFORE
 add_subdirectory("${OCCT_SOURCE_DIR}" occt EXCLUDE_FROM_ALL)
 
 # ── Convenience alias target ──────────────────────────────────────────────────
-# Consumer targets link against pcad::occt and get the right include paths
+# Consumer targets link against bladegen::occt and get the right include paths
 # and link libraries automatically.
-add_library(pcad_occt_kernel INTERFACE)
-add_library(pcad::occt ALIAS pcad_occt_kernel)
+add_library(bladegen_occt_kernel INTERFACE)
+add_library(bladegen::occt ALIAS bladegen_occt_kernel)
 
-target_include_directories(pcad_occt_kernel INTERFACE
+target_include_directories(bladegen_occt_kernel INTERFACE
     "${CMAKE_BINARY_DIR}/inc"                        # Windows flat copy
     "${CMAKE_BINARY_DIR}/occt/inc"                   # Windows Standard_Version.hxx
     "${CMAKE_BINARY_DIR}/include/opencascade"        # Linux collected source headers
     "${CMAKE_BINARY_DIR}/occt/include/opencascade"   # Linux Standard_Version.hxx
 )
 
-target_link_libraries(pcad_occt_kernel INTERFACE
+target_link_libraries(bladegen_occt_kernel INTERFACE
     # Foundation
     TKernel
     TKMath

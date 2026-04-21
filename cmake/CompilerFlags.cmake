@@ -3,8 +3,8 @@
 # Call this once from the root CMakeLists — it sets an INTERFACE library
 # that src/ and tests/ both link against.
 
-add_library(pcad_compiler_flags INTERFACE)
-add_library(pcad::compiler_flags ALIAS pcad_compiler_flags)
+add_library(bladegen_compiler_flags INTERFACE)
+add_library(bladegen::compiler_flags ALIAS bladegen_compiler_flags)
 
 # ── Detect compiler family ────────────────────────────────────────────────────
 set(IS_MSVC  $<CXX_COMPILER_ID:MSVC>)
@@ -13,7 +13,7 @@ set(IS_CLANG $<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>)
 set(IS_GCC_LIKE $<OR:${IS_GNU},${IS_CLANG}>)
 
 # ── MSVC flags ────────────────────────────────────────────────────────────────
-target_compile_options(pcad_compiler_flags INTERFACE
+target_compile_options(bladegen_compiler_flags INTERFACE
     $<${IS_MSVC}:
         /W4           # High warning level
         /permissive-  # Strict standards conformance
@@ -30,7 +30,7 @@ target_compile_options(pcad_compiler_flags INTERFACE
 )
 
 # ── GCC / Clang flags ────────────────────────────────────────────────────────
-target_compile_options(pcad_compiler_flags INTERFACE
+target_compile_options(bladegen_compiler_flags INTERFACE
     $<${IS_GCC_LIKE}:
         -Wall
         -Wextra
@@ -52,15 +52,15 @@ target_compile_options(pcad_compiler_flags INTERFACE
 )
 
 # ── AddressSanitizer ──────────────────────────────────────────────────────────
-if(PCAD_ENABLE_ASAN)
+if(BLADEGEN_ENABLE_ASAN)
     if(MSVC)
         message(FATAL_ERROR "ASan preset is not supported on MSVC — use linux-asan.")
     endif()
-    target_compile_options(pcad_compiler_flags INTERFACE
+    target_compile_options(bladegen_compiler_flags INTERFACE
         -fsanitize=address,undefined
         -fno-omit-frame-pointer
     )
-    target_link_options(pcad_compiler_flags INTERFACE
+    target_link_options(bladegen_compiler_flags INTERFACE
         -fsanitize=address,undefined
     )
 endif()
@@ -69,7 +69,7 @@ endif()
 include(CheckIPOSupported)
 check_ipo_supported(RESULT _ipo_supported OUTPUT _ipo_msg)
 if(_ipo_supported)
-    target_compile_options(pcad_compiler_flags INTERFACE
+    target_compile_options(bladegen_compiler_flags INTERFACE
         $<$<CONFIG:Release,RelWithDebInfo>:>
     )
     set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE ON)
@@ -77,7 +77,7 @@ if(_ipo_supported)
 endif()
 
 # ── Windows: ensure Unicode API layer ─────────────────────────────────────────
-target_compile_definitions(pcad_compiler_flags INTERFACE
+target_compile_definitions(bladegen_compiler_flags INTERFACE
     $<${IS_MSVC}:
         UNICODE
         _UNICODE

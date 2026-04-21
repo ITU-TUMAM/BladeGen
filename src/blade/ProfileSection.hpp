@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file blade/ProfileSection.hpp
 /// @brief 2D turbine blade profile in the conformal (m′, θ) design plane.
 ///
@@ -21,7 +28,7 @@
 #include <numbers>
 #include <vector>
 
-namespace PCAD::Blade {
+namespace BladeGen::Blade {
 
 // ─── Primary design parameters ───────────────────────────────────────────────
 /// Aerodynamic design variables for a single turbine blade section.
@@ -264,4 +271,4 @@ struct ProfileSection
     }
 };
 
-} // namespace PCAD::Blade
+} // namespace BladeGen::Blade

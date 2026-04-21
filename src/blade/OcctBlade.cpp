@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file blade/OcctBlade.cpp
 /// @brief OCCT skinning implementation for the blade solid.
 ///
@@ -29,7 +36,7 @@
 #include <expected>
 #include <stdexcept>
 
-namespace PCAD::Blade {
+namespace BladeGen::Blade {
 
 // Remove consecutive duplicate points (within tol) from a closed loop.
 // The BSpline fitter requires strictly positive chord-length increments.
@@ -105,4 +112,4 @@ std::expected<TopoDS_Shape, std::string> MakeBladeSolid(
     return skinner.Shape();
 }
 
-} // namespace PCAD::Blade
+} // namespace BladeGen::Blade

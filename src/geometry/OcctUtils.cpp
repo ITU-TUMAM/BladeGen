@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file geometry/OcctUtils.cpp
 /// @brief Implementation of OCCT geometry wrappers.
 ///
@@ -17,7 +24,7 @@
 // OCCT — shape type
 #include <TopAbs_ShapeEnum.hxx>
 
-namespace PCAD::Geometry {
+namespace BladeGen::Geometry {
 
 // ── Primitives ───────────────────────────────────────────────────────────────
 
@@ -85,4 +92,4 @@ std::string ShapeTypeString(const TopoDS_Shape& shape)
     }
 }
 
-} // namespace PCAD::Geometry
+} // namespace BladeGen::Geometry

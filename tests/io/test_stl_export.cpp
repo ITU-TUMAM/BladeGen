@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file tests/io/test_stl_export.cpp
 /// @brief Integration tests for StlExporter.
 
@@ -12,17 +19,17 @@ namespace fs = std::filesystem;
 
 static fs::path TempStlPath()
 {
-    return fs::temp_directory_path() / "pcad_test_export.stl";
+    return fs::temp_directory_path() / "bladegen_test_export.stl";
 }
 
 TEST_CASE("StlExporter writes a non-empty STL file", "[io][stl]")
 {
-    const auto shape = PCAD::Geometry::MakeSphere(5.0);
+    const auto shape = BladeGen::Geometry::MakeSphere(5.0);
     REQUIRE(shape.has_value());
 
     const auto path = TempStlPath();
 
-    PCAD::IO::StlExporter exp;
+    BladeGen::IO::StlExporter exp;
     REQUIRE_NOTHROW(exp.Write(*shape, path));
 
     REQUIRE(fs::exists(path));
@@ -33,17 +40,17 @@ TEST_CASE("StlExporter writes a non-empty STL file", "[io][stl]")
 
 TEST_CASE("StlExporter finer deflection produces larger file", "[io][stl]")
 {
-    const auto shape = PCAD::Geometry::MakeSphere(10.0);
+    const auto shape = BladeGen::Geometry::MakeSphere(10.0);
     REQUIRE(shape.has_value());
 
-    const auto coarsePath = fs::temp_directory_path() / "pcad_coarse.stl";
-    const auto finePath   = fs::temp_directory_path() / "pcad_fine.stl";
+    const auto coarsePath = fs::temp_directory_path() / "bladegen_coarse.stl";
+    const auto finePath   = fs::temp_directory_path() / "bladegen_fine.stl";
 
-    PCAD::IO::StlExporter coarse;
+    BladeGen::IO::StlExporter coarse;
     coarse.SetLinearDeflection(1.0);
     coarse.Write(*shape, coarsePath);
 
-    PCAD::IO::StlExporter fine;
+    BladeGen::IO::StlExporter fine;
     fine.SetLinearDeflection(0.01);
     fine.Write(*shape, finePath);
 
@@ -56,6 +63,6 @@ TEST_CASE("StlExporter finer deflection produces larger file", "[io][stl]")
 TEST_CASE("StlExporter throws for null shape", "[io][stl]")
 {
     TopoDS_Shape nullShape;
-    PCAD::IO::StlExporter exp;
+    BladeGen::IO::StlExporter exp;
     CHECK_THROWS_AS(exp.Write(nullShape, TempStlPath()), std::runtime_error);
 }

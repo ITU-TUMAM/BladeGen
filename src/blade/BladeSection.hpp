@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file blade/BladeSection.hpp
 /// @brief 3D blade section and multi-span blade geometry.
 ///
@@ -16,7 +23,7 @@
 #include <array>
 #include <vector>
 
-namespace PCAD::Blade {
+namespace BladeGen::Blade {
 
 // ─── Stacking offset ─────────────────────────────────────────────────────────
 /// Rigid shift applied to a section after conformal mapping to 3D.
@@ -172,4 +179,4 @@ struct BladeGeometry
     return geom;
 }
 
-} // namespace PCAD::Blade
+} // namespace BladeGen::Blade

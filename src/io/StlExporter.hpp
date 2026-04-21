@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file io/StlExporter.hpp
 /// @brief STL file export via OpenCASCADE StlAPI_Writer.
 ///
@@ -10,7 +17,7 @@
 
 class TopoDS_Shape;
 
-namespace PCAD::IO {
+namespace BladeGen::IO {
 
 class StlExporter
 {
@@ -39,4 +46,4 @@ private:
     double m_angularDeflection = 0.5;
 };
 
-} // namespace PCAD::IO
+} // namespace BladeGen::IO

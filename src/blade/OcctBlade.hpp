@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file blade/OcctBlade.hpp
 /// @brief OCCT-based blade solid construction from spanwise section loops.
 ///
@@ -14,7 +21,7 @@
 #include <expected>
 #include <vector>
 
-namespace PCAD::Blade {
+namespace BladeGen::Blade {
 
 /// Create a blade solid by skinning ordered spanwise profile loops.
 ///
@@ -25,4 +32,4 @@ namespace PCAD::Blade {
 [[nodiscard]] std::expected<TopoDS_Shape, std::string> MakeBladeSolid(
     const std::vector<std::vector<std::array<double, 3>>>& sections);
 
-} // namespace PCAD::Blade
+} // namespace BladeGen::Blade

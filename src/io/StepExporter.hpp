@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file io/StepExporter.hpp
 /// @brief STEP file export via OpenCASCADE STEPControl_Writer.
 ///
@@ -12,7 +19,7 @@
 
 class TopoDS_Shape;
 
-namespace PCAD::IO {
+namespace BladeGen::IO {
 
 enum class StepProtocol { AP203, AP214 };
 
@@ -35,4 +42,4 @@ private:
     std::vector<std::pair<TopoDS_Shape, std::string>> m_shapes;
 };
 
-} // namespace PCAD::IO
+} // namespace BladeGen::IO

@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file io/StepExporter.cpp
 /// @brief STEP export implementation.
 
@@ -13,7 +20,7 @@
 #include <Interface_Static.hxx>
 #include <IFSelect_ReturnStatus.hxx>
 
-namespace PCAD::IO {
+namespace BladeGen::IO {
 
 StepExporter::StepExporter(StepProtocol protocol)
     : m_protocol(protocol)
@@ -53,4 +60,4 @@ void StepExporter::Write(const std::filesystem::path& path) const
         throw std::runtime_error("StepExporter: OCCT Write failed for '" + path.string() + "'");
 }
 
-} // namespace PCAD::IO
+} // namespace BladeGen::IO

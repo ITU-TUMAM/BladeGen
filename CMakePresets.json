@@ -24,8 +24,8 @@
       "generator": "Ninja",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "PCAD_BUILD_TESTS": "ON",
-        "PCAD_ENABLE_ASAN": "OFF"
+        "BLADEGEN_BUILD_TESTS": "ON",
+        "BLADEGEN_ENABLE_ASAN": "OFF"
       }
     },
 
@@ -36,8 +36,8 @@
       "generator": "Ninja",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-        "PCAD_BUILD_TESTS": "ON",
-        "PCAD_ENABLE_ASAN": "OFF"
+        "BLADEGEN_BUILD_TESTS": "ON",
+        "BLADEGEN_ENABLE_ASAN": "OFF"
       }
     },
 
@@ -48,8 +48,8 @@
       "generator": "Ninja",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "PCAD_BUILD_TESTS": "ON",
-        "PCAD_ENABLE_ASAN": "ON"
+        "BLADEGEN_BUILD_TESTS": "ON",
+        "BLADEGEN_ENABLE_ASAN": "ON"
       }
     },
 
@@ -64,8 +64,8 @@
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "PCAD_BUILD_TESTS": "ON",
-        "PCAD_ENABLE_ASAN": "OFF"
+        "BLADEGEN_BUILD_TESTS": "ON",
+        "BLADEGEN_ENABLE_ASAN": "OFF"
       }
     },
 
@@ -80,8 +80,8 @@
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
-        "PCAD_BUILD_TESTS": "ON",
-        "PCAD_ENABLE_ASAN": "OFF"
+        "BLADEGEN_BUILD_TESTS": "ON",
+        "BLADEGEN_ENABLE_ASAN": "OFF"
       }
     },
 
@@ -94,8 +94,8 @@
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_C_COMPILER": "clang-cl",
         "CMAKE_CXX_COMPILER": "clang-cl",
-        "PCAD_BUILD_TESTS": "ON",
-        "PCAD_ENABLE_ASAN": "OFF"
+        "BLADEGEN_BUILD_TESTS": "ON",
+        "BLADEGEN_ENABLE_ASAN": "OFF"
       }
     },
 
@@ -106,8 +106,8 @@
       "generator": "Ninja",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
-        "PCAD_BUILD_TESTS": "OFF",
-        "PCAD_BUILD_DOCS": "ON"
+        "BLADEGEN_BUILD_TESTS": "OFF",
+        "BLADEGEN_BUILD_DOCS": "ON"
       }
     }
 

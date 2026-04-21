@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file params/BladeParams.cpp
 /// @brief JSON serialisation and geometry conversion for BladeParams.
 
@@ -12,7 +19,7 @@
 #include <sstream>
 #include <stdexcept>
 
-namespace PCAD::Params {
+namespace BladeGen::Params {
 
 // ─── Degree ↔ radian helpers ─────────────────────────────────────────────────
 static constexpr double kDegToRad = std::numbers::pi / 180.0;
@@ -248,4 +255,4 @@ void BladeParams::to_file(const std::filesystem::path& path) const
     f << j.dump(2) << '\n';
 }
 
-} // namespace PCAD::Params
+} // namespace BladeGen::Params

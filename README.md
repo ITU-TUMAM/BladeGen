@@ -37,7 +37,7 @@ that is needed to build.
 ParametricCAD/
 ├── cmake/
 │   ├── CompilerFlags.cmake   # Strict cross-platform warning flags
-│   ├── VendorOCCT.cmake      # OCCT subdirectory + pcad::occt alias target
+│   ├── VendorOCCT.cmake      # OCCT subdirectory + bladegen::occt alias target
 │   ├── VendorCppAD.cmake     # CppAD: pre-built (Windows) / FetchContent (Linux)
 │   └── Docs.cmake            # Doxygen → Sphinx pipeline
 ├── vendor/

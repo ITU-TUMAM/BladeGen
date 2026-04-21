@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file blade/BSplineBasis.hpp
 /// @brief Templated Cox–de Boor B-spline basis and derivative evaluation.
 ///
@@ -12,7 +19,7 @@
 #include <type_traits>
 #include <vector>
 
-namespace PCAD::Blade {
+namespace BladeGen::Blade {
 
 // ─── Primal extraction ────────────────────────────────────────────────────────
 /// Extract the underlying double from T.
@@ -132,4 +139,4 @@ template <typename T>
     return knots;
 }
 
-} // namespace PCAD::Blade
+} // namespace BladeGen::Blade

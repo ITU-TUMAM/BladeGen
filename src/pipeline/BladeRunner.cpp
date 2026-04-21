@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file pipeline/BladeRunner.cpp
 /// @brief BladeRunner implementation.
 
@@ -11,7 +18,7 @@
 
 #include <stdexcept>
 
-namespace PCAD::Pipeline {
+namespace BladeGen::Pipeline {
 
 BladeRunner::BladeRunner(BladeRunnerConfig cfg)
     : m_cfg(std::move(cfg))
@@ -75,4 +82,4 @@ BladeRunnerResult BladeRunner::run(const std::filesystem::path& params_file) con
     return run(Params::BladeParams::from_file(params_file));
 }
 
-} // namespace PCAD::Pipeline
+} // namespace BladeGen::Pipeline

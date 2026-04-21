@@ -1,3 +1,10 @@
+# ------------------------------------------------------------------------------
+# Project: BladeGen
+# Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+# License-Filename: LICENSE
+# ------------------------------------------------------------------------------
 # tests/CMakeLists.txt
 # Add a new test group by creating a subdirectory with its own CMakeLists.txt
 # and adding an add_subdirectory() call here.

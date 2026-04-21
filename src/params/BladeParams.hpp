@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file params/BladeParams.hpp
 /// @brief JSON-serialisable blade design parameters.
 ///
@@ -34,7 +41,7 @@
 #include <string>
 #include <vector>
 
-namespace PCAD::Params {
+namespace BladeGen::Params {
 
 // ─── Per-span-station parameters ─────────────────────────────────────────────
 struct StationParams
@@ -91,4 +98,4 @@ struct BladeParams
     void to_file(const std::filesystem::path& path) const;
 };
 
-} // namespace PCAD::Params
+} // namespace BladeGen::Params

@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file main.cpp
 /// @brief CLI entry point for the ParametricCAD template application.
 ///
@@ -36,22 +43,22 @@ int main(int argc, char* argv[])
     // ── Build example geometry ────────────────────────────────────────────────
     std::cout << "\nBuilding geometry...\n";
 
-    const auto sphere = PCAD::Geometry::MakeSphere(5.0);
+    const auto sphere = BladeGen::Geometry::MakeSphere(5.0);
     if (!sphere) {
         std::cerr << "ERROR: failed to build sphere\n";
         return EXIT_FAILURE;
     }
-    std::cout << "  Sphere  r=5.0  type=" << PCAD::Geometry::ShapeTypeString(*sphere) << '\n';
+    std::cout << "  Sphere  r=5.0  type=" << BladeGen::Geometry::ShapeTypeString(*sphere) << '\n';
 
-    const auto box = PCAD::Geometry::MakeBox(10.0, 6.0, 4.0);
+    const auto box = BladeGen::Geometry::MakeBox(10.0, 6.0, 4.0);
     if (!box) {
         std::cerr << "ERROR: failed to build box\n";
         return EXIT_FAILURE;
     }
-    std::cout << "  Box  10x6x4  type=" << PCAD::Geometry::ShapeTypeString(*box) << '\n';
+    std::cout << "  Box  10x6x4  type=" << BladeGen::Geometry::ShapeTypeString(*box) << '\n';
 
     // ── Bounding boxes ────────────────────────────────────────────────────────
-    if (const auto bb = PCAD::Geometry::GetBoundingBox(*sphere)) {
+    if (const auto bb = BladeGen::Geometry::GetBoundingBox(*sphere)) {
         const auto [dx, dy, dz] = bb->Extents();
         std::cout << "  Sphere bbox extents: " << dx << " x " << dy << " x " << dz << '\n';
     }
@@ -59,7 +66,7 @@ int main(int argc, char* argv[])
     // ── STEP export ───────────────────────────────────────────────────────────
     std::cout << "\nExporting STEP...\n";
     try {
-        PCAD::IO::StepExporter stepExp;
+        BladeGen::IO::StepExporter stepExp;
         stepExp.AddShape(*sphere, "ExampleSphere");
         stepExp.AddShape(*box, "ExampleBox");
         const auto stepPath = outDir / "example.step";
@@ -74,7 +81,7 @@ int main(int argc, char* argv[])
     // ── STL export ────────────────────────────────────────────────────────────
     std::cout << "\nExporting STL...\n";
     try {
-        PCAD::IO::StlExporter stlExp;
+        BladeGen::IO::StlExporter stlExp;
         stlExp.SetLinearDeflection(0.01);
         const auto stlPath = outDir / "example_sphere.stl";
         stlExp.Write(*sphere, stlPath);

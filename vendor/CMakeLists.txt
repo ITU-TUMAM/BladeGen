@@ -4,16 +4,16 @@
 # Each dependency is wired individually:
 #
 #   occt/    — configured by cmake/VendorOCCT.cmake
-#              exposes alias target: pcad::occt
+#              exposes alias target: bladegen::occt
 #
 #   catch2/  — added via add_subdirectory in root CMakeLists.txt
-#              when PCAD_BUILD_TESTS=ON
+#              when BLADEGEN_BUILD_TESTS=ON
 #              exposes targets: Catch2::Catch2WithMain
 #
 #   cppad/   — Windows only: pre-built static binaries (x64-Debug / x64-Release)
 #              configured by cmake/VendorCppAD.cmake
 #              On Linux the same module fetches the source via FetchContent.
-#              exposes alias target: pcad::cppad
+#              exposes alias target: bladegen::cppad
 #
 #   eigen/   — header-only, exposed as INTERFACE IMPORTED target
 #              Eigen3::Eigen in root CMakeLists.txt

@@ -4,7 +4,7 @@
 # Windows : pre-built static binaries vendored under vendor/cppad/x64-{Debug,Release}
 # Linux   : downloaded from GitHub at configure time via FetchContent
 #
-# Exposes alias target: pcad::cppad
+# Exposes alias target: bladegen::cppad
 #
 # CppAD quirks handled here:
 #   - CppAD writes configure.hpp back into its source tree (not the binary dir).
@@ -108,4 +108,4 @@ else()
 endif()
 
 # ── Alias ─────────────────────────────────────────────────────────────────────
-add_library(pcad::cppad ALIAS cppad_lib)
+add_library(bladegen::cppad ALIAS cppad_lib)

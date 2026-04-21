@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file io/StlExporter.cpp
 /// @brief STL export implementation.
 
@@ -11,7 +18,7 @@
 #include <BRepMesh_IncrementalMesh.hxx>
 #include <StlAPI_Writer.hxx>
 
-namespace PCAD::IO {
+namespace BladeGen::IO {
 
 void StlExporter::Write(const TopoDS_Shape& shape,
                         const std::filesystem::path& path) const
@@ -35,4 +42,4 @@ void StlExporter::Write(const TopoDS_Shape& shape,
         throw std::runtime_error("StlExporter: StlAPI_Writer failed for '" + path.string() + "'");
 }
 
-} // namespace PCAD::IO
+} // namespace BladeGen::IO

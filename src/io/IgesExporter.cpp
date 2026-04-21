@@ -1,3 +1,10 @@
+// ------------------------------------------------------------------------------
+// Project: BladeGen
+// Copyright(c) 2026, Onur Tuncer, PhD, Istanbul Technical University
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+// License-Filename: LICENSE
+// ------------------------------------------------------------------------------
 /// @file io/IgesExporter.cpp
 /// @brief IGES export implementation.
 
@@ -10,7 +17,7 @@
 #include <Interface_Static.hxx>
 #include <TopoDS_Shape.hxx>
 
-namespace PCAD::IO {
+namespace BladeGen::IO {
 
 void IgesExporter::AddShape(const TopoDS_Shape& shape, const std::string& label)
 {
@@ -42,4 +49,4 @@ void IgesExporter::Write(const std::filesystem::path& path) const
             "IgesExporter: OCCT Write failed for '" + path.string() + "'");
 }
 
-} // namespace PCAD::IO
+} // namespace BladeGen::IO
